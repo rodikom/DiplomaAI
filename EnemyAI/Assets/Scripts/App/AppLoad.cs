@@ -1,7 +1,6 @@
 ﻿using Interfaces;
 using Services;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Player;
 
 public class AppLoad : MonoBehaviour
@@ -11,16 +10,23 @@ public class AppLoad : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         InitializeServices();
-        LoadMainMenu();
+    }
+
+    public void Start()
+    {
+        var gameLoop = ServiceLocator.Get<IGameLoopService>();
+        gameLoop.GoMenu();
     }
 
    private void InitializeServices()
 {
     ServiceLocator.Clear();
-
-    var gameLoop = new GameLoopService();
+    
+    var stateMachine = new GameStateMachine();
+    var gameLoop = new GameLoopService(stateMachine);
     var experience = new ExperienceService();
 
+    ServiceLocator.Register<GameStateMachine>(stateMachine);
     ServiceLocator.Register<IGameLoopService>(gameLoop);
     ServiceLocator.Register<IExperienceService>(experience);
 
@@ -30,9 +36,4 @@ public class AppLoad : MonoBehaviour
     var playerResources = new PlayerResourcesService(playerStats);
     ServiceLocator.Register<IStats>(playerResources);
 }
-
-    private void LoadMainMenu()
-    {
-        SceneManager.LoadSceneAsync("MainMenuScene", LoadSceneMode.Additive);
-    }
 }

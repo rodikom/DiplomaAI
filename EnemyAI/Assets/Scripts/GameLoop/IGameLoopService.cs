@@ -5,6 +5,7 @@
         void StartGame();
         void Pause();
         void Resume();
+        void GoMenu();
         bool IsPaused { get; }
     }
 }

@@ -1,18 +1,15 @@
 using Interfaces;
 public sealed class GameStateMachine
 {
-    private IGameState _currentState;
+    public IGameState CurrentState { get; private set; }
 
     public void ChangeState(
         IGameState newState,
         ITransitionCommand transitionCommand = null)
     {
-        _currentState?.Exit();
-
+        CurrentState?.Exit();
         transitionCommand?.Execute();
-
-        _currentState = newState;
-
-        _currentState.Enter();
+        CurrentState = newState;
+        CurrentState.Enter();
     }
 }

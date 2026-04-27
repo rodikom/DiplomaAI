@@ -6,7 +6,6 @@ public sealed class GameState : IGameState
 {
     public void Enter()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync("MainMenuScene");
     }

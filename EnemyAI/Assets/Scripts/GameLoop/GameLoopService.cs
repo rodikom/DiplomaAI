@@ -11,7 +11,6 @@ namespace Services
         private readonly IGameState _pauseState;
 
         public bool IsPaused { get; private set; }
-
         public GameLoopService(GameStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
@@ -53,6 +52,13 @@ namespace Services
 
             _stateMachine.ChangeState(
                 _gameState
+            );
+        }
+
+        public void GoMenu()
+        {
+            _stateMachine.ChangeState(
+                _mainMenuState
             );
         }
     }
